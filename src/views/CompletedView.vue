@@ -72,6 +72,7 @@
                 v-for="task in tasks" 
                 :key="task.id" 
                 class="task-item"
+                :class="{ 'confirmed': task.confirmed }"
               >
                 <div class="task-content">
                   <div class="task-header">
@@ -83,8 +84,37 @@
                     >
                       {{ task.priority }}
                     </el-tag>
-                    <span class="task-title">{{ task.title }}</span>
+                    <span class="task-title">
+                      {{ task.title }}
+                      <el-tag 
+                        v-if="task.confirmed"
+                        type="success"
+                        size="small"
+                        effect="dark"
+                        style="margin-left: 8px;"
+                      >
+                        已确认
+                      </el-tag>
+                    </span>
                     <div class="task-actions">
+                      <el-button 
+                        v-if="!task.confirmed"
+                        type="success" 
+                        size="small" 
+                        @click="handleConfirm(task.id)"
+                        :icon="Check"
+                      >
+                        确认完成
+                      </el-button>
+                      <el-button 
+                        v-else
+                        type="info" 
+                        size="small" 
+                        @click="handleUnconfirm(task.id)"
+                        :icon="Close"
+                      >
+                        取消确认
+                      </el-button>
                       <el-button 
                         type="text" 
                         size="small" 
@@ -124,6 +154,9 @@
                     <span class="completed-time">
                       <el-icon><Clock /></el-icon>
                       完成: {{ formatDateTime(task.completed_at) }}
+                    </span>
+                    <span v-if="task.confirmed && task.confirmed_at" class="task-confirmed-time">
+                      确认时间: {{ formatDateTime(task.confirmed_at) }}
                     </span>
                     <span class="priority-label">
                       {{ getPriorityLabel(task.priority) }}
@@ -198,19 +231,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { 
-  Search, 
-  Refresh, 
-  Check, 
-  View, 
-  RefreshLeft, 
-  Delete, 
-  Calendar, 
-  Clock 
-} from '@element-plus/icons-vue'
+import { Delete, RefreshLeft, Search, Calendar, Check, Close } from '@element-plus/icons-vue'
 import { useTaskStore } from '@/stores/taskStore'
 import { DateUtils } from '@/utils/date'
-import type { Task, Priority } from '@/types'
+import type { Task } from '@/types'
 
 const taskStore = useTaskStore()
 
@@ -328,6 +352,16 @@ const clearFilters = () => {
 const viewTaskDetail = (task: Task) => {
   selectedTask.value = task
   showDetailDialog.value = true
+}
+
+const handleConfirm = (taskId: string) => {
+  taskStore.confirmTask(taskId)
+  ElMessage.success('任务已确认完成')
+}
+
+const handleUnconfirm = (taskId: string) => {
+  taskStore.unconfirmTask(taskId)
+  ElMessage.success('已取消确认')
 }
 
 const restoreTask = async (task: Task) => {
@@ -455,6 +489,16 @@ onMounted(() => {
 
 .task-item:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-item.confirmed {
+  border-left: 4px solid #67c23a;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+}
+
+.task-confirmed-time {
+  color: #67c23a;
+  font-weight: 500;
 }
 
 .task-header {
