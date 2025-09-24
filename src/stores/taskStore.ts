@@ -91,25 +91,7 @@ export const useTaskStore = defineStore('task', () => {
   const uncompleteTask = (taskId: string) => {
     const updates = {
       status: 'pending' as TaskStatus,
-      completed_at: undefined,
-      confirmed: undefined,
-      confirmed_at: undefined
-    }
-    updateTask(taskId, updates)
-  }
-
-  const confirmTask = (taskId: string) => {
-    const updates = {
-      confirmed: true,
-      confirmed_at: DateUtils.formatDateTime(new Date())
-    }
-    updateTask(taskId, updates)
-  }
-
-  const unconfirmTask = (taskId: string) => {
-    const updates = {
-      confirmed: false,
-      confirmed_at: undefined
+      completed_at: undefined
     }
     updateTask(taskId, updates)
   }
@@ -210,8 +192,6 @@ export const useTaskStore = defineStore('task', () => {
     deleteTask,
     completeTask,
     uncompleteTask,
-    confirmTask,
-    unconfirmTask,
     searchTasks,
     getTasksByDateRange,
     getTaskCountByDate,

@@ -14,8 +14,6 @@ export interface Task {
   status: TaskStatus
   created_at: string // ISO日期字符串
   completed_at?: string // ISO日期字符串
-  confirmed?: boolean // 人工确认标记，用于已完成任务的二次确认
-  confirmed_at?: string // 确认时间
 }
 
 // 业务数据接口
