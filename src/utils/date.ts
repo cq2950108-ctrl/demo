@@ -32,6 +32,16 @@ export class DateUtils {
   }
 
   /**
+   * 格式化时间为 HH:MM 格式（使用北京时间）
+   */
+  static formatTime(date: Date | string): string {
+    const d = this.getBeijingTime(date)
+    const hours = String(d.getHours()).padStart(2, '0')
+    const minutes = String(d.getMinutes()).padStart(2, '0')
+    return `${hours}:${minutes}`
+  }
+
+  /**
    * 获取今天的日期字符串（北京时间）
    */
   static getToday(): string {
