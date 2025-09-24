@@ -39,14 +39,18 @@
             router
             class="nav-menu"
           >
-            <el-menu-item index="/">
-              <el-icon><Calendar /></el-icon>
-              <span>待办事项</span>
-            </el-menu-item>
-            <el-menu-item index="/completed">
-              <el-icon><Check /></el-icon>
-              <span>已完成任务</span>
-            </el-menu-item>
+            <el-menu-item index="/workspace">
+            <el-icon><Monitor /></el-icon>
+            <span>整合工作区</span>
+          </el-menu-item>
+          <el-menu-item index="/">
+            <el-icon><List /></el-icon>
+            <span>待办事项</span>
+          </el-menu-item>
+          <el-menu-item index="/completed">
+            <el-icon><Check /></el-icon>
+            <span>已完成任务</span>
+          </el-menu-item>
             <el-menu-item index="/data-input">
               <el-icon><Edit /></el-icon>
               <span>数据录入</span>
@@ -92,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import { Calendar, Check, Edit, TrendCharts, Document, Tools, ChatDotRound, Timer, Notebook, Briefcase } from '@element-plus/icons-vue'
+import { Calendar, Check, Edit, TrendCharts, Document, Tools, ChatDotRound, Timer, Notebook, Briefcase, Monitor, List } from '@element-plus/icons-vue'
 
 // 生成粒子样式
 const getParticleStyle = (index: number) => {

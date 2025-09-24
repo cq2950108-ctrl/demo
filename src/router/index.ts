@@ -15,15 +15,20 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'todo',
-      component: TodoView
-    },
-    {
-      path: '/completed',
-      name: 'completed',
-      component: CompletedView
-    },
+    path: '/',
+    name: 'todo',
+    component: TodoView
+  },
+  {
+    path: '/workspace',
+    name: 'workspace',
+    component: () => import('../views/IntegratedWorkspaceView.vue')
+  },
+  {
+    path: '/completed',
+    name: 'completed',
+    component: CompletedView
+  },
     {
       path: '/data-input',
       name: 'data-input',
