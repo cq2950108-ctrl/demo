@@ -35,10 +35,23 @@ export class DateUtils {
    * 格式化时间为 HH:MM 格式（使用北京时间）
    */
   static formatTime(date: Date | string): string {
-    const d = this.getBeijingTime(date)
-    const hours = String(d.getHours()).padStart(2, '0')
-    const minutes = String(d.getMinutes()).padStart(2, '0')
-    return `${hours}:${minutes}`
+    try {
+      if (!date) return '--:--'
+      
+      const d = this.getBeijingTime(date)
+      // 检查日期是否有效
+      if (isNaN(d.getTime())) {
+        console.error('无效的日期格式:', date)
+        return typeof date === 'string' ? date : '--:--'
+      }
+      
+      const hours = String(d.getHours()).padStart(2, '0')
+      const minutes = String(d.getMinutes()).padStart(2, '0')
+      return `${hours}:${minutes}`
+    } catch (error) {
+      console.error('格式化时间错误:', error)
+      return typeof date === 'string' ? date : '--:--'
+    }
   }
 
   /**

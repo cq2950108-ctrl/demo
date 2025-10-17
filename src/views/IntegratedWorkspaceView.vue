@@ -381,7 +381,12 @@ const formatDuration = (minutes: number) => {
 
 const formatDateTime = (dateTime?: string) => {
   if (!dateTime) return ''
-  return DateUtils.formatTime(new Date(dateTime))
+  try {
+    return DateUtils.formatTime(new Date(dateTime))
+  } catch (error) {
+    console.error('日期格式化错误:', error)
+    return dateTime // 返回原始字符串作为备选
+  }
 }
 
 const getModeText = () => {

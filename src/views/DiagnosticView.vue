@@ -105,7 +105,7 @@ https://example.feishu.cn/sheets/shtcnxxxxxx
 import { ref, onMounted, computed } from 'vue'
 import { DocumentService } from '@/utils/documentService'
 import { FeishuService } from '@/utils/feishuService'
-import { checkFeishuConfig } from '@/utils/config.ts'
+import { checkFeishuConfig } from '@/utils/config'
 
 const testing = ref(false)
 const syncing = ref(false)
@@ -132,7 +132,7 @@ const checkConfigs = async () => {
 
   // 检查文档配置
   try {
-    const configs = await DocumentService.getConfigs()
+    const configs = await DocumentService.getDocumentConfigs()
     const hasFeishuConfig = configs.some(config => config.type === 'feishu')
     configStatus.value.document = {
       valid: hasFeishuConfig,
@@ -154,7 +154,7 @@ const testConnection = async () => {
   console.log('开始测试飞书连接...')
   
   try {
-    const configs = await DocumentService.getConfigs()
+    const configs = await DocumentService.getDocumentConfigs()
     const feishuConfig = configs.find(config => config.type === 'feishu')
     
     if (!feishuConfig) {
@@ -188,7 +188,7 @@ const testDataSync = async () => {
   console.log('开始测试数据同步...')
   
   try {
-    const configs = await DocumentService.getConfigs()
+    const configs = await DocumentService.getDocumentConfigs()
     const feishuConfig = configs.find(config => config.type === 'feishu')
     
     if (!feishuConfig) {
