@@ -133,7 +133,7 @@ const checkConfigs = async () => {
   // 检查文档配置
   try {
     const configs = await DocumentService.getDocumentConfigs()
-    const hasFeishuConfig = configs.some(config => config.type === 'feishu')
+    const hasFeishuConfig = configs.some(config => config.type === 'feishu_sheets')
     configStatus.value.document = {
       valid: hasFeishuConfig,
       message: hasFeishuConfig ? '已配置飞书文档' : '未配置飞书文档'
@@ -155,7 +155,7 @@ const testConnection = async () => {
   
   try {
     const configs = await DocumentService.getDocumentConfigs()
-    const feishuConfig = configs.find(config => config.type === 'feishu')
+    const feishuConfig = configs.find(config => config.type === 'feishu_sheets')
     
     if (!feishuConfig) {
       connectionResult.value = {
@@ -189,7 +189,7 @@ const testDataSync = async () => {
   
   try {
     const configs = await DocumentService.getDocumentConfigs()
-    const feishuConfig = configs.find(config => config.type === 'feishu')
+    const feishuConfig = configs.find(config => config.type === 'feishu_sheets')
     
     if (!feishuConfig) {
       syncResult.value = {
@@ -199,7 +199,7 @@ const testDataSync = async () => {
       return
     }
     
-    const result = await DocumentService.syncDataFromDocument(feishuConfig.id)
+    const result = await DocumentService.syncDataFromDocument(feishuConfig)
     syncResult.value = result
     
     console.log('数据同步测试结果:', result)
